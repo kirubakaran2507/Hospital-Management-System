@@ -1,0 +1,38 @@
+public class ConsultMedicalProf2 extends MedicalProcess{
+    HospitalManagement hospital;
+
+    public ConsultMedicalProf2(HospitalManagement hospital){
+        this.hospital = hospital;
+    }
+
+    @Override
+    public void consultMedicalProf1() {
+        System.out.println("Medical professional 1 consulted already");
+    }
+
+    @Override
+    public synchronized void consultMedicalProf2(){
+        System.out.println("Consulting with medical professional 2");
+
+        int freeTime = hospital.getProf2FreeTime();
+        int inTime = hospital.getProf1FreeTime();
+
+        waitingTime = (inTime<freeTime) ? freeTime-inTime : waitingTime;
+        nextFreeTime = (inTime<freeTime) ? freeTime+5 : inTime+5;
+
+        hospital.currPatient.addWaitingTime(waitingTime);
+        hospital.setProf2FreeTime(nextFreeTime);
+        hospital.setCurrProcess(hospital.consultDoctor);
+        hospital.showGratitude(waitingTime);
+    }
+
+    @Override
+    public void consultDoctor() {
+        System.out.println("Consult medical professional 2 first");
+    }
+
+    @Override
+    public void buyMedicines() {
+        System.out.println("Consult medical professional 2 first");
+    }
+}
