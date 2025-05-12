@@ -1,0 +1,126 @@
+import java.util.*;
+
+public class HospitalManagement {
+    private static HospitalManagement hospital;
+
+    MedicalProcess consultProf1;
+    MedicalProcess consultProf2;
+    MedicalProcess consultDoctor;
+    MedicalProcess buyMedicine;
+
+    private MedicalProcess currProcess;
+    private int prof1FreeTime;
+    private int prof2FreeTime;
+    private int doctorFreeTime;
+    private int pharmacyFreeTime;
+    private int noOfPatients;
+    private final Queue<Patient> patients;
+    public Patient currPatient;
+
+    private HospitalManagement() {
+        prof1FreeTime = 300;
+        prof2FreeTime = 300;
+        doctorFreeTime = 300;
+        pharmacyFreeTime = 300;
+
+        consultProf1 = new ConsultMedicalProf1(this);
+        consultProf2 = new ConsultMedicalProf2(this);
+        consultDoctor = new ConsultDoctor(this);
+        buyMedicine = new BuyMedicines(this);
+        currProcess = consultProf1;
+        patients = new LinkedList<>();
+    }
+
+    public static HospitalManagement getInstance() {
+        if (hospital == null) {
+            hospital = new HospitalManagement();
+        }
+        return hospital;
+    }
+
+    public void addPatient(Patient patient) {
+        if (patients.contains(patient)) {
+            System.out.println("Patient record already exists");
+        } else {
+            noOfPatients++;
+            patients.add(patient);
+            System.out.println("Patient record created");
+        }
+    }
+
+    public synchronized void consult(){
+        if (patients.isEmpty()){
+            System.out.println("No patients in the queue to get treated further");
+            return;
+        }
+        currPatient = patients.poll();
+        consultMedicalProf1();
+        consultMedicalProf2();
+        consultDoctor();
+        buyMedicines();
+        currPatient.displayRecord();
+    }
+
+    public synchronized void consultMedicalProf1(){
+        currProcess.consultMedicalProf1();
+    }
+
+    public synchronized void consultMedicalProf2(){
+        currProcess.consultMedicalProf2();
+    }
+
+    public synchronized void consultDoctor(){
+        currProcess.consultDoctor();
+    }
+
+    public synchronized void buyMedicines(){
+        currProcess.buyMedicines();
+    }
+
+    public void showAllPatients() {
+        System.out.println("No of patients records in the hospital :"+ noOfPatients);
+        System.out.println("No of patients to get treated further  :"+ patients.size());
+    }
+
+    public void showGratitude(int waitingTime){
+        if (waitingTime>0){
+            System.out.println("Sorry for making the patient "+waitingTime+" minutes amount of time");
+        }
+    }
+
+    public void setProf1FreeTime(int prof1FreeTime) {
+        this.prof1FreeTime = prof1FreeTime;
+    }
+
+    public int getProf1FreeTime() {
+        return prof1FreeTime;
+    }
+
+    public void setProf2FreeTime(int prof2FreeTime) {
+        this.prof2FreeTime = prof2FreeTime;
+    }
+
+    public int getProf2FreeTime() {
+        return prof2FreeTime;
+    }
+
+    public void setDoctorFreeTime(int doctorFreeTime) {
+        this.doctorFreeTime = doctorFreeTime;
+    }
+
+    public int getDoctorFreeTime() {
+        return doctorFreeTime;
+    }
+
+    public void setPharmacyFreeTime(int pharmacyFreeTime) {
+        this.pharmacyFreeTime = pharmacyFreeTime;
+    }
+
+    public int getPharmacyFreeTime() {
+        return pharmacyFreeTime;
+    }
+
+    public void setCurrProcess(MedicalProcess process){
+        currProcess = process;
+    }
+}
