@@ -1,0 +1,37 @@
+public class Patient {
+    private final int id;
+    private final String name;
+    private final int inTime;
+    private int outTime;
+    private int waitingTime;
+    private int timeTakenByDoctor;
+
+    Patient(int id,String name,int inTime){
+        this.id = id;
+        this.name = name;
+        this.inTime = inTime;
+    }
+
+    public void displayRecord(){
+        System.out.println("Id                            :" + id);
+        System.out.println("Name                          :" + name);
+        System.out.println("Time taken by doctor(minutes) :" + timeTakenByDoctor);
+        System.out.println("In time                       :" + inTime);
+        System.out.println("Out time                      :" + outTime);
+        System.out.println("Total waiting time            :" + waitingTime);
+    }
+
+    public void setOutTime(int outTime){
+        this.outTime = outTime;
+    }
+
+    public int getInTime(){ return inTime;}
+
+    public void addWaitingTime(int waitingTime){
+        this.waitingTime += waitingTime;
+    }
+
+    public void setTimeTakenByDoctor(int timeTakenByDoctor) {
+        this.timeTakenByDoctor = timeTakenByDoctor;
+    }
+}
