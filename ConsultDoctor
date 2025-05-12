@@ -1,0 +1,40 @@
+import java.util.Random;
+
+public class ConsultDoctor extends MedicalProcess{
+    HospitalManagement hospital;
+
+    public ConsultDoctor(HospitalManagement hospital){
+        this.hospital = hospital;
+    }
+    @Override
+    public void consultMedicalProf1() {
+        System.out.println("Medical professional 1 consulted already");
+    }
+
+    @Override
+    public void consultMedicalProf2() {
+        System.out.println("Medical professional 2 consulted already");
+    }
+
+    @Override
+    public void consultDoctor() {
+        System.out.println("Consulting with doctor...");
+        int freeTime = hospital.getDoctorFreeTime();
+        int inTime = hospital.getProf2FreeTime();
+        int timeTakenByDoctor = new Random().nextInt(19)+2;
+
+        waitingTime = (inTime<freeTime) ? freeTime-inTime : waitingTime;
+        nextFreeTime = (inTime<freeTime) ? freeTime+5 : inTime+5;
+
+        hospital.setDoctorFreeTime(nextFreeTime);
+        hospital.currPatient.addWaitingTime(waitingTime);
+        hospital.currPatient.setTimeTakenByDoctor(timeTakenByDoctor);
+        hospital.setCurrProcess(hospital.buyMedicine);
+        hospital.showGratitude(waitingTime);
+    }
+
+    @Override
+    public void buyMedicines() {
+        System.out.println("Consult doctor first");
+    }
+}
