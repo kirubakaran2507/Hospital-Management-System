@@ -1,0 +1,9 @@
+public abstract class MedicalProcess {
+    protected int waitingTime;
+    protected int nextFreeTime;
+
+    abstract void consultMedicalProf1();
+    abstract void consultMedicalProf2();
+    abstract void consultDoctor();
+    abstract void buyMedicines();
+}
