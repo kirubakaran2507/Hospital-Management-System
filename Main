@@ -1,0 +1,18 @@
+public class Main {
+    public static void main(String[] args){
+        HospitalManagement hospital = HospitalManagement.getInstance();
+
+        Patient karan = new Patient(100,"karan",300);
+        Patient prem = new Patient(101,"prem",305);
+        Patient rajesh = new Patient(102,"rajesh",306);
+        Patient jack = new Patient(103,"jack",311);
+
+        hospital.addPatient(karan);
+        hospital.addPatient(prem);
+        hospital.addPatient(rajesh);
+
+        hospital.consult();
+        hospital.consult();
+        hospital.consult();
+    }
+}
